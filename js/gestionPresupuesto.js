@@ -4,7 +4,6 @@
 let presupuesto = 0;
 
 function actualizarPresupuesto(nuevoPresupuesto) {
-    // TODO
    if (nuevoPresupuesto >= 0){
     presupuesto = nuevoPresupuesto;
     return presupuesto;
@@ -18,6 +17,8 @@ function actualizarPresupuesto(nuevoPresupuesto) {
 
 function mostrarPresupuesto() {
     // TODO
+    let presupuestoActual = 'Tu presupuesto actual es de '+ presupuesto + ' €';
+    return presupuestoActual;
 }
 
 function CrearGasto() {
