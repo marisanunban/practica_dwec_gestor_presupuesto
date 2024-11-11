@@ -22,41 +22,18 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(descripcion, valor, fecha , ...etiquetas) {
-
-    this.descripcion = descripcion;
-    if(valor >= 0){
-    this.valor = valor;
-    }
-    else{
-        this.valor = 0;
-    }
-    if(etiquetas.length === 0){
-        this.etiquetas = [];
-    }
-    else{
-        this.etiquetas = [];
-        this.anyadirEtiquetas(...etiquetas);
-
-    }
-
-    let fechaNueva = Date.parse(fecha);
-    if (fechaNueva){
-        this.fecha = fechaNueva;
-    }
-    else{
-        this.fecha = Date.parse(new Date());
-    }
-
     
     this.mostrarGasto = function() {
         let gastoAhora = `Gasto correspondiente a  ${this.descripcion}  con valor ${this.valor}`;
         return gastoAhora;
     }
     this.mostrarGastoCompleto = function(){
-        let gastoCompleto = `Gasto correspondiente a  ${this.descripcion}  con valor ${this.valor}.\n
-        Fecha: ${new Date(this.fecha).toLocaleString()} \n Etiquetas: \n`;
-        for(let etiqueta of this.etiquetas){
-            gastoCompleto += `${etiqueta}\n`
+        let gastoCompleto = `Gasto correspondiente a ${this.descripcion } con valor ${this.valor} €.
+Fecha: ${new Date(this.fecha).toLocaleString()}
+Etiquetas:\n`
+
+        for (let etiqueta of this.etiquetas) {
+            gastoCompleto += `- ${etiqueta}\n`
         }
         return gastoCompleto;
     }
@@ -92,6 +69,31 @@ function CrearGasto(descripcion, valor, fecha , ...etiquetas) {
         });
     }
 
+
+    this.descripcion = descripcion;
+    if(valor >= 0){
+    this.valor = valor;
+    }
+    else{
+        this.valor = 0;
+    }
+    if(etiquetas.length === 0){
+        this.etiquetas = [];
+    }
+    else{
+        this.etiquetas = [];
+        this.anyadirEtiquetas(...etiquetas);
+
+    }
+
+    let fechaNueva = Date.parse(fecha);
+    if (fechaNueva){
+        this.fecha = fechaNueva;
+    }
+    else{
+        this.fecha = Date.parse(new Date());
+    }
+
 }
 function listarGastos(){
 return gastos;
@@ -114,11 +116,13 @@ function borrarGasto(id){
     }
     
 }
+// se puede hacer con for pero consideré que usar reduce era más optimo
 function calcularTotalGastos(){
  let totalGastos = gastos.reduce (function (acc, gastoAhora){
     return acc + gastoAhora;} , 0);
     return totalGastos;
- }
+ } 
+
 
 function calcularBalance(){
     return presupuesto - calcularTotalGastos();
