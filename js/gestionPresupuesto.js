@@ -21,7 +21,7 @@ function mostrarPresupuesto() {
     return presupuestoActual;
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha , ...etiquetas) {
 
     this.descripcion = descripcion;
     if(valor >= 0){
@@ -30,12 +30,30 @@ function CrearGasto(descripcion, valor) {
     else{
         this.valor = 0;
     }
+    if(etiquetas.length === 0){
+        this.etiquetas = [];
+    }
+    else{
+        this.etiquetas = [];
+        this.anyadirEtiquetas(...etiquetas);
+
+    }
+
+    let fechaNueva = Date.parse(fecha);
+    if (fechaNueva){
+        this.fecha = fechaNueva;
+    }
+    else{
+        this.fecha = Date.parse(new Date());
+    }
+
+    
     this.mostrarGasto = function() {
         let gastoAhora = 'Gasto correspondiente a ' + descripcion + ' con valor ' + valor + ' €';
         return gastoAhora;
     }
-    this.actualizarDescripcion = function(descripcion){
-        this.descripcion = descripcion;
+    this.actualizarDescripcion = function(descri){
+        this.descripcion = descri;
     }
     this.actualizarValor = function(valor){
         if(valor >= 0){
@@ -43,22 +61,42 @@ function CrearGasto(descripcion, valor) {
         }
         
     }
+    this.anyadirEtiquetas = function(...etiquetas){
+        for(let contenidoEtiqueta of etiquetas){
+            if(!this.etiquetas.includes(contenidoEtiqueta)){
+                this.etiquetas.push(contenidoEtiqueta); 
+            }
+        }
+        
+    } 
 
 }
 function listarGastos(){
-
+return gastos;
 }
-function anyadirGasto(){
-
+function anyadirGasto(gasto){
+    gasto.id = idGasto++;
+    gastos.push(gasto);
 }
-function borrarGasto(){
+function borrarGasto(id){
+    let gastoBorrar = "";
+
+    for(let gastoBuscar of gastos){
+        if(gastoBuscar.id == id ){
+            gastoBorrar = gastoBuscar
+        }
+    }
+    if(gastoBorrar){
+        let posicionGasto = gastos.indexOf(gastoBorrar);
+        gastos.splice(posicionGasto,1);
+    }
     
 }
 function calcularTotalGastos(){
 
 }
 function calcularBalance(){
-    
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
