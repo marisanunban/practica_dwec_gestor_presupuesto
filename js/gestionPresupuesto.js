@@ -119,7 +119,7 @@ function borrarGasto(id){
 // se puede hacer con for pero consideré que usar reduce era más optimo
 function calcularTotalGastos(){
  let totalGastos = gastos.reduce (function (acc, gastoAhora){
-    return acc + gastoAhora;} , 0);
+    return acc + gastoAhora.valor;} , 0);
     return totalGastos;
  } 
 
