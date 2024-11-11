@@ -93,9 +93,13 @@ function borrarGasto(id){
     
 }
 function calcularTotalGastos(){
+ let totalGastos = gastos.reduce (function (acc, gastoAhora){
+    return acc + gastoAhora;} , 0);
+    return totalGastos;
+ }
 
-}
 function calcularBalance(){
+    return presupuesto - calcularTotalGastos();
 
 }
 
