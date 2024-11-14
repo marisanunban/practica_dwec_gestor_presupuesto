@@ -24,7 +24,7 @@ function mostrarPresupuesto() {
 function CrearGasto(descripcion, valor, fecha , ...etiquetas) {
     
     this.mostrarGasto = function() {
-        let gastoAhora = `Gasto correspondiente a  ${this.descripcion}  con valor ${this.valor}`;
+        let gastoAhora = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor}`;
         return gastoAhora;
     }
     this.mostrarGastoCompleto = function(){
