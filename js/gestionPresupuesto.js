@@ -203,7 +203,21 @@ function filtrarGastos(datos){
     })
 
 }
-function agruparGastos(){
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
+    let filtrarGastosRes = filtrarGastos({etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta});
+
+    return filtrarGastosRes.reduce(function(acc, gasto) {
+
+        let periodoActual = gasto.obtenerPeriodoAgrupacion(periodo);
+
+	if (acc[periodoActual]) {
+	    acc[periodoActual] = acc[periodoActual] + gasto.valor;
+	} 
+    else {
+	    acc[periodoActual] = gasto.valor;
+	}
+        return acc;
+    }, {})
 
 }
 
