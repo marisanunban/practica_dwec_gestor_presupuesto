@@ -10,7 +10,7 @@ function mostrarGastoWeb(idElemento, gasto){
     gastoDiv.classList.add("gasto")
 
     let gastoDescripcion = document.createElement("div");
-    gastoDescripcion.classList.add("gasto-decripcion");
+    gastoDescripcion.classList.add("gasto-descripcion");
     gastoDescripcion.innerHTML=`${gasto.descripcion}`;
     gastoDiv.appendChild(gastoDescripcion)
     
