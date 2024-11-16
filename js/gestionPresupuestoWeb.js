@@ -29,44 +29,42 @@ function mostrarDatoWeb(idElemento, gasto){
     for (const etiq of gasto.etiqueta) {
         let spanEtiqueta = document.createElement("span");
         spanEtiqueta.classList.add("gasto-etiquetas-etiqueta")
-        spanEtiqueta.innerText=etiq
+        spanEtiqueta.innerText = etiq
         gastoEtiquetas.appendChild(spanEtiqueta)
     }
     gastoDiv.appendChild(gastoEtiquetas)
+    
+    let elemento = document.getElementById(idElemento);
+        elemento.appendChild(gastoDiv)
 }
 
+function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
+const divAgrupacion = document.createElement("div");
+  divAgrupacion.classList.add("agrupacion");
 
+  const tituloDiv = document.createElement('h1');
+  tituloDiv.innerText = `Gastos agrupados por ${periodo}`;
+  divAgrupacion.append(tituloDiv);
 
+  for (const [fecha, value] of Object.entries(agrup)) {
+    let divAgrupacionDato = document.createElement('div');
+    divAgrupacionDato.classList.add('agrupacion-dato');
 
+    let divAgrupacionClave = document.createElement('span');
+    divAgrupacionClave.classList.add('agrupacion-dato-clave');
+    divAgrupacionClave.innerText = fecha;
+    divAgrupacionDato.appendChild(divAgrupacionClave);
 
+    let divAgrupacionValor = document.createElement('span');
+    divAgrupacionValor.classList.add('agrupacion-dato-valor');
+    divAgrupacionValor.innerText = value;
+    divAgrupacionDato.appendChild(divAgrupacionValor);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    divAgrupacion.appendChild(divAgrupacionDato);
+  }
+     let elemento = document.getElementById(idElemento)
+        elemento.append(divAgrupacion)
+}
 
 
 export{
