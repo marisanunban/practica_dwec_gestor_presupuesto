@@ -105,6 +105,10 @@ function nuevoGastoWeb(){
 
 
 function EditarHandle(gasto){
+
+    this.handleEvent = handleEventFunction;
+
+    function handleEventFunction(event) {
     let descripcion=prompt("Introduce una descripcion",gasto.descripcion);
     let valor = parseInt(prompt("Introduce el valor",gasto.valor));
     let fecha = prompt("Introduce la fecha en formato (aaaa/mm/dd)",gasto.fecha);
@@ -117,7 +121,18 @@ function EditarHandle(gasto){
     gasto.anyadirEtiquetas(...etiquetas)
 
     repintar();
+    }
 }
+function BorrarHandle(gasto){
+    this.handleEvent = handleEventFunction;
+    
+    function handleEventFunction(event) {
+    gesPres.borrarGasto(gasto.id)
+    repintar();
+    }
+}
+
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
