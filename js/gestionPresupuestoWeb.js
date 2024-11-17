@@ -1,6 +1,7 @@
 import * as gesPres from './gestionPresupuesto.js'
 
 document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
+document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 
 function mostrarDatoEnId(valor, idElemento){
     let idRecogida = document.getElementById(idElemento);
@@ -90,6 +91,17 @@ function actualizarPresupuestoWeb(){
     repintar();
 }
 
+function nuevoGastoWeb(){
+    let descripcion=prompt("Introduce una descripcion");
+    let valor = parseInt(prompt("Introduce el valor"));
+    let fecha = prompt("Introduce la fecha en formato (aaaa/mm/dd)");
+    let etiquetas = prompt('Introduce etiquetas separadas por coma').split(',');
+    
+    let gasto=gesPres.CrearGasto(descripcion,valor,fecha,etiquetas);
+    gesPres.anyadirGasto(gasto)
+
+    repintar()
+}
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
