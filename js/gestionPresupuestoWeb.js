@@ -117,6 +117,7 @@ function nuevoGastoWeb(){
     let fecha = prompt("Introduce la fecha en formato (aaaa/mm/dd)");
     let etiquetas = prompt('Introduce etiquetas separadas por coma').split(',');
     
+    //console.log(descripcion,valor,fecha,...etiquetas)
     let gasto=gesPres.CrearGasto(descripcion,valor,fecha,...etiquetas);
     gesPres.anyadirGasto(gasto)
 
@@ -165,5 +166,11 @@ function BorrarEtiquetasHandle(gasto,etiqueta){
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintar,
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb,
+    EditarHandle,
+    BorrarHandle,
+    BorrarEtiquetasHandle
 }
