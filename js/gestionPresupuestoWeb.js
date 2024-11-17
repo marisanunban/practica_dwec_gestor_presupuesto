@@ -32,7 +32,9 @@ function mostrarGastoWeb(idElemento, gasto){
     let gastoEtiquetas = document.createElement("div");
     gastoEtiquetas.classList.add("gasto-etiquetas");
     for (const etiq of gasto.etiquetas) {
+        let handBorrarEtiqueta= new BorrarEtiquetasHandle(gasto,etiq)
         let spanEtiqueta = document.createElement("span");
+        spanEtiqueta.addEventListener("click",handBorrarEtiqueta);
         spanEtiqueta.classList.add("gasto-etiquetas-etiqueta");
         spanEtiqueta.innerHTML = `${etiq} `;
         gastoEtiquetas.appendChild(spanEtiqueta);
@@ -40,7 +42,25 @@ function mostrarGastoWeb(idElemento, gasto){
     gastoDiv.appendChild(gastoEtiquetas);
     
     let elemento = document.getElementById(idElemento);
-        elemento.appendChild(gastoDiv);
+    elemento.appendChild(gastoDiv);
+
+
+    let handEditar = new EditarHandle(gasto);
+    let botonEditar = document.createElement("button");
+    botonEditar.addEventListener("click",handEditar);
+    botonEditar.classList.add("gasto-editar");
+    botonEditar.innerHTML="Editar";
+    botonEditar.type="button";
+    gastoDiv.appendChild(botonEditar);
+
+
+    let handBorrar = new EditarHandle(gasto);
+    let botonBorrar = document.createElement("button");
+    botonBorrar.addEventListener("click",handBorrar);
+    botonBorrar.classList.add("gasto-borrar");
+    botonBorrar.innerHTML="Borrar";
+    botonBorrar.type="button";
+    gastoDiv.appendChild(botonBorrar);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
@@ -67,8 +87,8 @@ const divAgrupacion = document.createElement("div");
 
     divAgrupacion.appendChild(divAgrupacionDato);
   }
-     let elemento = document.getElementById(idElemento)
-        elemento.append(divAgrupacion)
+    let elemento = document.getElementById(idElemento);
+    elemento.append(divAgrupacion);
 }
 function repintar(){
     mostrarDatoEnId(gesPres.mostrarPresupuesto(), "presupuesto");
@@ -125,10 +145,19 @@ function EditarHandle(gasto){
 }
 function BorrarHandle(gasto){
     this.handleEvent = handleEventFunction;
-    
+
     function handleEventFunction(event) {
     gesPres.borrarGasto(gasto.id)
     repintar();
+    }
+}
+
+function BorrarEtiquetasHandle(gasto,etiqueta){
+    this.handleEvent = handleEventFunction;
+
+    function handleEventFunction(event) {
+        gasto.borrarEtiquetas(etiqueta)
+        repintar();
     }
 }
 
