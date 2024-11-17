@@ -1,3 +1,6 @@
+import * as gesPres from './gestionPresupuesto.js'
+
+
 function mostrarDatoEnId(valor, idElemento){
     let idRecogida = document.getElementById(idElemento);
     idRecogida.innerHTML = valor;
@@ -65,7 +68,20 @@ const divAgrupacion = document.createElement("div");
      let elemento = document.getElementById(idElemento)
         elemento.append(divAgrupacion)
 }
+function repintar(){
+    mostrarDatoEnId(gesPres.mostrarPresupuesto(), "presupuesto");
+    mostrarDatoEnId(gesPres.calcularTotalGastos(), "gastos-totales");
+    mostrarDatoEnId(gesPres.calcularBalance(),"balance-total");
+    document.getElementById("listado-gastos-completo").innerHTML = "";
 
+    for (let gasto of gesPres.listarGastos()) {
+    
+        mostrarGastoWeb("listado-gastos-completo", gasto);
+        
+    }
+    
+    
+}
 
 export{
     mostrarDatoEnId,
