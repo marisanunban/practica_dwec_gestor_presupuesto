@@ -1,5 +1,6 @@
 import * as gesPres from './gestionPresupuesto.js'
 
+document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
 
 function mostrarDatoEnId(valor, idElemento){
     let idRecogida = document.getElementById(idElemento);
@@ -77,10 +78,16 @@ function repintar(){
     for (let gasto of gesPres.listarGastos()) {
     
         mostrarGastoWeb("listado-gastos-completo", gasto);
-        
+
     }
-    
-    
+}
+
+function actualizarPresupuestoWeb(){
+    let introducirPresupuesto = prompt ("Introduzca un presupuesto");
+    introducirPresupuesto = parseInt(introducirPresupuesto);
+    gesPres.actualizarPresupuesto(introducirPresupuesto);
+
+    repintar();
 }
 
 export{
