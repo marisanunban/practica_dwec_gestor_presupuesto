@@ -33,14 +33,14 @@ function mostrarGastoWeb(idElemento, gasto){
     gastoEtiquetas.classList.add("gasto-etiquetas");
     for (const etiq of gasto.etiquetas) {
         let spanEtiqueta = document.createElement("span");
-        spanEtiqueta.classList.add("gasto-etiquetas-etiqueta")
-        spanEtiqueta.innerHTML = `${etiq} `
-        gastoEtiquetas.appendChild(spanEtiqueta)
+        spanEtiqueta.classList.add("gasto-etiquetas-etiqueta");
+        spanEtiqueta.innerHTML = `${etiq} `;
+        gastoEtiquetas.appendChild(spanEtiqueta);
     }
-    gastoDiv.appendChild(gastoEtiquetas)
+    gastoDiv.appendChild(gastoEtiquetas);
     
     let elemento = document.getElementById(idElemento);
-        elemento.appendChild(gastoDiv)
+        elemento.appendChild(gastoDiv);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
@@ -97,10 +97,26 @@ function nuevoGastoWeb(){
     let fecha = prompt("Introduce la fecha en formato (aaaa/mm/dd)");
     let etiquetas = prompt('Introduce etiquetas separadas por coma').split(',');
     
-    let gasto=gesPres.CrearGasto(descripcion,valor,fecha,etiquetas);
+    let gasto=gesPres.CrearGasto(descripcion,valor,fecha,...etiquetas);
     gesPres.anyadirGasto(gasto)
 
     repintar()
+}
+
+
+function EditarHandle(gasto){
+    let descripcion=prompt("Introduce una descripcion",gasto.descripcion);
+    let valor = parseInt(prompt("Introduce el valor",gasto.valor));
+    let fecha = prompt("Introduce la fecha en formato (aaaa/mm/dd)",gasto.fecha);
+    let etiquetas = prompt('Introduce etiquetas separadas por coma',gasto.mostrarEtiquetas()).split(',');
+
+    gasto.actualizarDescripcion(descripcion)
+    gasto.actualizarValor(valor)
+    gasto.actualizarFecha(fecha)
+    gasto.borrarEtiquetasCompleta()
+    gasto.anyadirEtiquetas(...etiquetas)
+
+    repintar();
 }
 export{
     mostrarDatoEnId,

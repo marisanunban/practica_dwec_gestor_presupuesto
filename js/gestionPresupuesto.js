@@ -27,6 +27,7 @@ function CrearGasto(descripcion, valor, fecha , ...etiquetas) {
         let gastoAhora = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor}`;
         return gastoAhora;
     }
+
     this.mostrarGastoCompleto = function(){
         let gastoCompleto = `Gasto correspondiente a ${this.descripcion } con valor ${this.valor} €.
 Fecha: ${new Date(this.fecha).toLocaleString()}
@@ -37,21 +38,32 @@ Etiquetas:\n`
         }
         return gastoCompleto;
     }
+    this.mostrarEtiquetas = function(){
+        let texto=""
+        for (const eti of this.etiquetas) {
+            texto +=`${eti},`
+        }
+        return texto.length() -1
+    }
+
     this.actualizarDescripcion = function(descri){
         this.descripcion = descri;
     }
+
     this.actualizarValor = function(valor){
         if(valor >= 0){
         this.valor = valor;
         }
      
     }
+
     this.actualizarFecha = function(fecha){
         let fechaNueva = Date.parse(fecha);
         if (fechaNueva) {
             this.fecha = fechaNueva;
         }
     }
+
     this.anyadirEtiquetas = function(...etiquetas){
         for(let contenidoEtiqueta of etiquetas){
             if(!this.etiquetas.includes(contenidoEtiqueta)){
@@ -61,12 +73,13 @@ Etiquetas:\n`
         
     } 
 
-
-
     this.borrarEtiquetas = function(...etiquetasParam){
         this.etiquetas = this.etiquetas.filter(function(etiqueta) {
             return etiquetasParam.indexOf(etiqueta) === -1;
         });
+    }
+    this.borrarEtiquetasCompleta = function(){
+        this.etiquetas = []
     }
     this.obtenerPeriodoAgrupacion = function(fecha){
         let fechaComprobar = new Date(this.fecha);
