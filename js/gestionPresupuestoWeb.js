@@ -118,7 +118,7 @@ function nuevoGastoWeb(){
     let etiquetas = prompt('Introduce etiquetas separadas por coma').split(',');
     
     //console.log(descripcion,valor,fecha,...etiquetas)
-    let gasto=gesPres.CrearGasto(descripcion,valor,fecha,...etiquetas);
+    let gasto = new gesPres.CrearGasto(descripcion,valor,fecha,...etiquetas);
     gesPres.anyadirGasto(gasto)
 
     repintar()
@@ -130,7 +130,7 @@ function EditarHandle(gasto){
     this.handleEvent = handleEventFunction;
 
     function handleEventFunction(event) {
-    let descripcion=prompt("Introduce una descripcion",gasto.descripcion);
+    let descripcion = prompt("Introduce una descripcion",gasto.descripcion);
     let valor = parseInt(prompt("Introduce el valor",gasto.valor));
     let fecha = prompt("Introduce la fecha en formato (aaaa/mm/dd)",gasto.fecha);
     let etiquetas = prompt('Introduce etiquetas separadas por coma',gasto.mostrarEtiquetas()).split(',');
