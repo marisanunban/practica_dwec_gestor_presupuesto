@@ -42,8 +42,11 @@ Etiquetas:\n`
         let texto=""
         for (const eti of this.etiquetas) {
             texto +=`${eti},`
+            console.log(texto);
         }
-        return texto.length() -1
+        texto = texto.slice(0,-1);
+
+        return texto;
     }
 
     this.actualizarDescripcion = function(descri){
