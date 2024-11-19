@@ -54,7 +54,7 @@ function mostrarGastoWeb(idElemento, gasto){
     gastoDiv.appendChild(botonEditar);
 
 
-    let handBorrar = new EditarHandle(gasto);
+    let handBorrar = new BorrarHandle(gasto);
     let botonBorrar = document.createElement("button");
     botonBorrar.addEventListener("click",handBorrar);
     botonBorrar.classList.add("gasto-borrar");
@@ -105,7 +105,7 @@ function repintar(){
 
 function actualizarPresupuestoWeb(){
     let introducirPresupuesto = prompt ("Introduzca un presupuesto");
-    introducirPresupuesto = parseInt(introducirPresupuesto);
+    introducirPresupuesto = parseFloat(introducirPresupuesto);
     gesPres.actualizarPresupuesto(introducirPresupuesto);
 
     repintar();
@@ -113,7 +113,7 @@ function actualizarPresupuestoWeb(){
 
 function nuevoGastoWeb(){
     let descripcion=prompt("Introduce una descripcion");
-    let valor = parseInt(prompt("Introduce el valor"));
+    let valor = parseFloat(prompt("Introduce el valor"));
     let fecha = prompt("Introduce la fecha en formato (aaaa/mm/dd)");
     let etiquetas = prompt('Introduce etiquetas separadas por coma').split(',');
     
@@ -131,7 +131,7 @@ function EditarHandle(gasto){
 
     function handleEventFunction(event) {
     let descripcion = prompt("Introduce una descripcion",gasto.descripcion);
-    let valor = parseInt(prompt("Introduce el valor",gasto.valor));
+    let valor = parseFloat(prompt("Introduce el valor",gasto.valor));
     let fecha = prompt("Introduce la fecha en formato (aaaa-mm-dd)",gasto.fecha);
     let etiquetas = prompt('Introduce etiquetas separadas por coma',gasto.mostrarEtiquetas()).split(',');
 
