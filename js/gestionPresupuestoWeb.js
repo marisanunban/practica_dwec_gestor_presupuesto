@@ -3,6 +3,8 @@ import * as gesPres from './gestionPresupuesto.js'
 document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
 document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
+document.getElementById("guardar-gastos").addEventListener("click", guardarGastosWeb);
+document.getElementById("cargar-gastos").addEventListener("click", cargarGastosWeb);
 
 function mostrarDatoEnId(valor, idElemento){
     let idRecogida = document.getElementById(idElemento);
@@ -255,6 +257,21 @@ function BorrarEtiquetasHandle(gasto,etiqueta){
     }
 }
 
+function guardarGastosWeb(){
+     localStorage.setItem("GestorGastosDWEC", JSON.stringify(gesPres.listarGastos()));
+}
+function cargarGastosWeb(){
+    var arrayGastos = [];
+
+    if(localStorage.getItem("GestorGastosDWEC")){
+        arrayGastos = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
+        gesPres.cargarGastos(arrayGastos);  
+    }
+    else{
+        gesPres.cargarGastos(arrayGastos);
+    }
+    repintar();
+}
 
 export{
     mostrarDatoEnId,
@@ -267,4 +284,7 @@ export{
     BorrarHandle,
     BorrarEtiquetasHandle,
     nuevoGastoWebFormulario,
+    guardarGastosWeb,
+    cargarGastosWeb
+
 }
