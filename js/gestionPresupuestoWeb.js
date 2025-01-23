@@ -5,6 +5,7 @@ document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb)
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 document.getElementById("guardar-gastos").addEventListener("click", guardarGastosWeb);
 document.getElementById("cargar-gastos").addEventListener("click", cargarGastosWeb);
+document.getElementById("formulario-filtrado").addEventListener("submit", filtrarGastosWeb);
 
 function mostrarDatoEnId(valor, idElemento){
     let idRecogida = document.getElementById(idElemento);
@@ -273,6 +274,54 @@ function cargarGastosWeb(){
     repintar();
 }
 
+function filtrarGastosWeb (event) {
+    event.preventDefault()
+
+    let form = event.target;
+  
+    let descripcionContiene = form.elements['formulario-filtrado-descripcion'].value;
+    let valorMinimo = form.elements['formulario-filtrado-valor-minimo'].value;
+    let valorMaximo = form.elements['formulario-filtrado-valor-maximo'].value;
+    let fechaDesde = form.elements['formulario-filtrado-fecha-desde'].value;
+    let fechaHasta = form.elements['formulario-filtrado-fecha-hasta'].value;
+    let etiquetasTiene = form.elements['formulario-filtrado-etiquetas-tiene'].value;
+  
+    let variableFiltro = {};
+  
+    if (descripcionContiene !== '')
+         { 
+            variableFiltro.descripcionContiene = descripcionContiene ;
+            }
+    if (valorMinimo !== '') 
+        { 
+            variableFiltro.valorMinimo = valorMinimo ;
+        }
+    if (valorMaximo !== '') 
+        { 
+            variableFiltro.valorMaximo = valorMaximo ;
+        }
+    if (fechaDesde !== '') 
+        { 
+            variableFiltro.fechaDesde = fechaDesde ;
+        }
+    if (fechaHasta !== '') 
+        { 
+            variableFiltro.fechaHasta = fechaHasta ;
+        }
+    if (etiquetasTiene !== '') 
+        { 
+            variableFiltro.etiquetasTiene = gesPres.transformarListadoEtiquetas(etiquetasTiene) ;
+        }
+
+    let gastosFiltrados = gesPres.filtrarGastos(variableFiltro);
+  
+    document.getElementById('listado-gastos-completo').innerHTML = '';
+  
+    for (let gasto of gastosFiltrados) {
+      mostrarGastoWeb('listado-gastos-completo', gasto);
+    }
+  }
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
@@ -285,6 +334,7 @@ export{
     BorrarEtiquetasHandle,
     nuevoGastoWebFormulario,
     guardarGastosWeb,
-    cargarGastosWeb
+    cargarGastosWeb,
+    filtrarGastosWeb
 
 }

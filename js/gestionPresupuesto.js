@@ -261,6 +261,13 @@ function cargarGastos(gastosAlmacenamiento) {
         gastos.push(gastoRehidratado)
     }
 }
+function transformarListadoEtiquetas(listaEtiquetas){
+    var filtro = /[~.:;, ]+/
+
+    var arrayEtiquetas = listaEtiquetas.split(filtro);
+  
+    return arrayEtiquetas;
+}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -276,5 +283,6 @@ export   {
     calcularBalance,
     filtrarGastos,
     agruparGastos,
-    cargarGastos
+    cargarGastos,
+    transformarListadoEtiquetas
 }
