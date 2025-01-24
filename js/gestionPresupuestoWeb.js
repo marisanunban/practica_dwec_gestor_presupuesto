@@ -246,7 +246,7 @@ function EditarHandleformulario(gasto){
     })
     
     formulario.querySelector("button.cancelar").addEventListener('click', new eventoCancelar(botonEditarFormulario));
-    formulario.querySelector("button.gasto-enviar-api").addEventListener('click', actualizarGastosApi);
+    formulario.querySelector("button.gasto-enviar-api").addEventListener('click', actualizarGastosApi.bind(gasto));
     document.getElementById("controlesprincipales").appendChild(plantillaFormulario);
 
     }
@@ -388,8 +388,32 @@ function filtrarGastosWeb (event) {
         }
         
   }
-  async function actualizarGastosApi(){
+  async function actualizarGastosApi(evento){
+    let nombreUsuario = document.getElementById("nombre-usuario").value;
+    let urlApiUsuario = urlApi + nombreUsuario + "/" + this.gastoId;
 
+    let formu = evento.target.closest('form')
+
+    console.log(formu)
+
+        let descriForm = formu.elements.descripcion.value;
+        let valorForm = parseFloat(formu.elements.valor.value);
+        let fechaForm = formu.elements.fecha.value;
+        let etiquetForm = formu.elements.etiquetas.value.split(',');
+
+    let gastoNuevo = new gesPres.CrearGasto(descriForm,valorForm,fechaForm,...etiquetForm);
+    let respuesta = await fetch(urlApiUsuario,{
+        method: 'PUT',
+        body:JSON.stringify(gastoNuevo),
+        headers: {'Content-Type': 'application/json'}})
+        
+        if(respuesta.ok){
+            cargarGastosApi()
+        } 
+        else{
+            console.log("error");
+        }
+        
   }
 
 export{
