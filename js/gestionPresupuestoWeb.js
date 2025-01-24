@@ -6,6 +6,9 @@ document.getElementById("anyadirgasto-formulario").addEventListener("click", nue
 document.getElementById("guardar-gastos").addEventListener("click", guardarGastosWeb);
 document.getElementById("cargar-gastos").addEventListener("click", cargarGastosWeb);
 document.getElementById("formulario-filtrado").addEventListener("submit", filtrarGastosWeb);
+document.getElementById("cargar-gastos-api").addEventListener("click", cargarGastosApi);
+
+let urlApi =  "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/"
 
 function mostrarDatoEnId(valor, idElemento){
     let idRecogida = document.getElementById(idElemento);
@@ -319,6 +322,21 @@ function filtrarGastosWeb (event) {
   
     for (let gasto of gastosFiltrados) {
       mostrarGastoWeb('listado-gastos-completo', gasto);
+    }
+  }
+
+  async function cargarGastosApi(){
+    let nombreUsuario = document.getElementById("nombre-usuario").value;
+    let urlApiUsuario = urlApi + nombreUsuario;
+
+    let respuesta = await fetch (urlApiUsuario);
+    if (respuesta.ok){
+        let conversionJson = await respuesta.json();
+        gesPres.cargarGastos(conversionJson);
+        repintar();
+    }
+    else{
+        console.log("error");
     }
   }
 
