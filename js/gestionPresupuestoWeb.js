@@ -69,6 +69,14 @@ function mostrarGastoWeb(idElemento, gasto){
     botonBorrar.type="button";
     gastoDiv.appendChild(botonBorrar);
 
+    let handBorrarApi = new BorrarHandleApi(gasto);
+    let botonBorrarApi = document.createElement("button");
+    botonBorrarApi.addEventListener("click",handBorrarApi);
+    botonBorrarApi.classList.add("gasto-borrar-api");
+    botonBorrarApi.innerHTML="Borrar (Api)";
+    botonBorrarApi.type="button";
+    gastoDiv.appendChild(botonBorrarApi);
+
     let editarHandleFormulario = new EditarHandleformulario(gasto);
     let botonEditarForm = document.createElement("button");
     botonEditarForm.addEventListener("click",editarHandleFormulario);
@@ -172,7 +180,7 @@ function nuevoGastoWebFormulario(){
         repintar();
         botonAnyadirFormulario.disabled = false
     })
-    
+    formulario.querySelector("button.gasto-enviar-api").addEventListener('click', subirGastosApi);
     formulario.querySelector("button.cancelar").addEventListener('click', new eventoCancelar(botonAnyadirFormulario));
     document.getElementById("controlesprincipales").appendChild(plantillaFormulario);
 
@@ -238,6 +246,7 @@ function EditarHandleformulario(gasto){
     })
     
     formulario.querySelector("button.cancelar").addEventListener('click', new eventoCancelar(botonEditarFormulario));
+    formulario.querySelector("button.gasto-enviar-api").addEventListener('click', actualizarGastosApi);
     document.getElementById("controlesprincipales").appendChild(plantillaFormulario);
 
     }
@@ -250,6 +259,22 @@ function BorrarHandle(gasto){
     gesPres.borrarGasto(gasto.id)
     repintar();
     }
+}
+function BorrarHandleApi(gasto){
+    this.handleEvent = async (evento) =>{
+        let usuario = document.getElementById("nombre-usuario").value;
+        let respuesta = await fetch (urlApi + usuario + "/" + gasto.gastoId,{
+            method: 'DELETE'
+
+        })
+        if(respuesta.ok){
+            cargarGastosApi();
+        }
+        else{
+            console.log ("error");
+        }
+    }
+    
 }
 
 function BorrarEtiquetasHandle(gasto,etiqueta){
@@ -339,6 +364,33 @@ function filtrarGastosWeb (event) {
         console.log("error");
     }
   }
+  async function subirGastosApi(evento){
+    let nombreUsuario = document.getElementById("nombre-usuario").value;
+    let urlApiUsuario = urlApi + nombreUsuario;
+
+    let formu = evento.target.closest('form')
+    let descriForm = formu.elements.descripcion.value;
+    let valorForm = parseFloat(formu.elements.valor.value);
+    let fechaForm = formu.elements.fecha.value;
+    let etiquetForm = formu.elements.etiquetas.value.split(',');
+
+    let gastoNuevo = new gesPres.CrearGasto(descriForm,valorForm,fechaForm,...etiquetForm);
+    let respuesta = await fetch(urlApiUsuario,{
+        method: 'post',
+        body:JSON.stringify(gastoNuevo),
+        headers: {'Content-Type': 'application/json'}})
+        
+        if(respuesta.ok){
+            cargarGastosApi()
+        } 
+        else{
+            console.log("error");
+        }
+        
+  }
+  async function actualizarGastosApi(){
+
+  }
 
 export{
     mostrarDatoEnId,
@@ -353,6 +405,8 @@ export{
     nuevoGastoWebFormulario,
     guardarGastosWeb,
     cargarGastosWeb,
-    filtrarGastosWeb
+    filtrarGastosWeb,
+    cargarGastosApi,
+    subirGastosApi
 
 }
